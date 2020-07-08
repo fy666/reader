@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import {View, Text, StyleSheet,Button,TextInput,ScrollView } from 'react-native';
+import {View, Text, StyleSheet,Button,TextInput,ScrollView,TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types'
 import {BookContext} from '../Providers'
 
@@ -53,14 +53,47 @@ export default class Test2 extends React.Component {
       }
     }
 
+    showDefinition(word){
+      console.log(`Definition of ${word} `) //${this.contect.dico[word]}`)
+      console.log(word)
+    }
+
+    printWord(word){
+      return (<TouchableOpacity>
+      <Text onLongPress={() => this.showDefinition(word)}> {word} </Text>
+    </TouchableOpacity>)
+    }
+
+    removePunctuation = text => {
+      // this is a hack to remove comma from the text
+      // you may want to handle this different
+      return text.replace(/[.,\/#!$%\^&\*;:{}=\_`~()]/g, '');
+    };
+
+    printText(page){
+      return page.split(' ').map((word, index) => {
+        let clean_word = this.removePunctuation(word)
+        return(
+        <TouchableOpacity onPress={() => this.showDefinition(clean_word)}>
+        <Text>
+              {`${word} `}
+        </Text>
+        </TouchableOpacity>)
+      });
+    }
+
   //static lol = useContext(BookContext)
     render() {
     //  console.log(this.context)
+      let text_to_render = this.printText(this.context.chapter[this.state.chapter].page[this.state.page])
+      //console.log(text_to_render)
         return(
-          <View style={{justifyContent: "center", padding:50}}>
+          <View style={[styles.container, {justifyContent: "center", padding:50}]}>
           <Text style={{textAlign: 'center',fontSize : 15, color:'red'} }> {this.context.chapter[this.state.chapter].title}  </Text>
           <ScrollView>
-          <Text style={{textAlign: 'justify',fontSize : 15, color:'black'} }> {this.context.chapter[this.state.chapter].page[this.state.page]}  </Text>
+      //    <Text style={styles.paragraph}>
+          text_to_render
+          //</Text>
           <Button
           title="Next Page"
           onPress={() => this.nextPage()}
@@ -74,5 +107,23 @@ export default class Test2 extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    //paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 17,
+    textAlign: 'justify',
+  },
+  specialword: {
+    fontWeight: 'bold',
+  },
+});
 
 //marginTop:"5px"

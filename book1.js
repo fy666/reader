@@ -38,6 +38,11 @@ Le lendemain, Jojo réussit à obtenir un 10 sur 10 en maths, pour la première 
 « C'est un jour à marquer d'une pierre blanche. `
 const chapter1 = {"pages": 3, "page":[page1, page2, page3], "title":"Présentation de jojo"}
 const chapter2 = {"pages": 2, "page":[page2, page3], "title":"Jojo"}
-const book1 = {"chapters":2, "chapter": [chapter1, chapter2]}
-
+const dict={"cailloux":"petit objets durs","collection":"amas d'objets",
+"timbres":"morceau de papier rectangulaire",
+"vendre":"action d'échanger un objet ou un service contre de l'argent",
+"savonettes":"petit bout de savon",
+"léger":"de poids faible",
+"jour": "durée de temps"}
+const book1 = {"chapters":2, "chapter": [chapter1, chapter2], "dico":dict}
 export default book1
